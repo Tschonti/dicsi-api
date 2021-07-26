@@ -2,7 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 
-from .models import Greeting
+from rest_framework import viewsets
+
+from .serializers import SongSerializer
+from .models import Song
+
+class SongViewSet(viewsets.ModelViewSet):
+    queryset = Song.objects.all().order_by('id')
+    serializer_class = SongSerializer
 
 # Create your views here.
 def index(request):
@@ -11,11 +18,3 @@ def index(request):
     return HttpResponse('<pre>' + r.text + '</pre>')
 
 
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})

@@ -5,7 +5,7 @@ from .models import Song
 class SongSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=256)
-    lyrics = serializers.CharField(max_length=5000)
+    #lyrics = serializers.CharField(max_length=5000)
     verses = serializers.ListField(
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )

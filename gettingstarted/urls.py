@@ -5,6 +5,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 import hello.views
+from rest_framework.authtoken import views
+
 
 # To add a new path, first import the app:
 # import blog
@@ -17,4 +19,5 @@ import hello.views
 urlpatterns = [
     path("", include('hello.urls')),
     path("admin/", admin.site.urls),
+    path('api-token-auth/', views.obtain_auth_token),
 ]

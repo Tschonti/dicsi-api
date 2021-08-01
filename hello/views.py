@@ -26,5 +26,5 @@ def searchTitle(request, term):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchLyrics(request, term):
-    songs = Song.objects.filter(lyrics__icontains=term)
+    songs = Song.objects.filter(lyrics__search=term)
     return Response(SongSerializer(songs, many=True).data)

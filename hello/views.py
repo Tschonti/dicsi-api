@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 import requests
 from rest_framework.response import Response
+from django.contrib.postgres.search import SearchQuery
 
 from rest_framework import viewsets
 
@@ -17,6 +18,12 @@ class SongViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
-def search(request, term):
+def searchTitle(request, term):
     songs = Song.objects.filter(title__icontains=term)
+    return Response(SongSerializer(songs, many=True).data)
+
+@api_view(['GET'])
+@renderer_classes([JSONRenderer])
+def searchLyrics(request, term):
+    songs = Song.objects.filter(lyrics__icontains=term)
     return Response(SongSerializer(songs, many=True).data)

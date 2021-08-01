@@ -19,8 +19,7 @@ class SongViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchTitle(request, term):
-    search_query = SearchQuery(term)
-    songs = Song.objects.annotate(search=search_query).filter(title=search_query)
+    songs = Song.objects.filter(title__search=term)
     return Response(SongSerializer(songs, many=True).data)
 
 @api_view(['GET'])

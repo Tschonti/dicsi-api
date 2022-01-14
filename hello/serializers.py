@@ -33,7 +33,7 @@ class PlaylistSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         pl = Playlist.objects.create(name=validated_data['name'])
-        pl.songs.set(validated_data['songs'])
+        pl.songs.set(list(map(int, validated_data.get('songs', []))))
         return pl
 
     def update(self, instance, validated_data):

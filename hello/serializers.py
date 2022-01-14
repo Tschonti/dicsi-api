@@ -44,7 +44,7 @@ class SongSerializer(serializers.Serializer):
 #        instance.save()
 #        return instance
 
-class SongsField(serializers.Field):
+class SongsField(serializers.PrimaryKeyRelatedField):
 
     def to_native(self, value):
         queryset = Song.objects.filter(pk__in=value)

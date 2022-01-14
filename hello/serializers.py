@@ -45,17 +45,22 @@ class SongSerializer(serializers.Serializer):
 #        instance.save()
 #        return instance
 
-class SongsField(serializers.PrimaryKeyRelatedField):
+class SongsField(serializers.Field):
 
     def to_native(self, value):
         queryset = Song.objects.filter(pk__in=value)
         serializer = SongSerializer(queryset, many=True)
         print(serializer.data)
         return serializer.data
+    
+    def to_representation(self, value):
+        if self.pk_field is not None:
+            return self.pk_field.to_representation(value.pk)
+        return value.pk
 
 class PlaylistSerializer(serializers.ModelSerializer):
-    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    #songs = SongsField(queryset=Song.objects.all(), many=True)
+    # songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
+    songs = SongsField(queryset=Song.objects.all(), many=True)
 
     def to_native(self, instance):
         print('heyyyyya')

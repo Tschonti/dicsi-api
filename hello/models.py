@@ -6,3 +6,8 @@ class Song(models.Model):
     title = models.CharField(max_length=256)
     lyrics = models.CharField(max_length=5000)
     verses = models.CharField(max_length=5000, blank=True, default='')
+
+class Playlist(models.Model):
+    name = models.CharField(max_length=256)
+    created_at = models.DateTimeField(auto_now_add=True)
+    songs = models.ManyToManyField(Song)

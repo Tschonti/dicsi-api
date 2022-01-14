@@ -26,10 +26,10 @@ class SongSerializer(serializers.Serializer):
         return ret
 
 class PlaylistSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
+    id = serializers.IntegerField(allow_empty=True, required=False)
     name = serializers.CharField(max_length=256)
-    created_at = serializers.DateTimeField()
-    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True)
+    created_at = serializers.DateTimeField(allow_empty=True, required=False)
+    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
 
     def create(self, validated_data):
         return Playlist.objects.create(**validated_data)

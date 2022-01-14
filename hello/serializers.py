@@ -49,6 +49,7 @@ class SongsField(serializers.PrimaryKeyRelatedField):
     def to_native(self, value):
         queryset = Song.objects.filter(pk__in=value)
         serializer = SongSerializer(queryset, many=True)
+        print(serializer.data)
         return serializer.data
 
 class PlaylistSerializer(serializers.ModelSerializer):

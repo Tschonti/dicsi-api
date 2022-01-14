@@ -32,7 +32,9 @@ class PlaylistSerializer(serializers.Serializer):
     songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
 
     def create(self, validated_data):
-        return Playlist.objects.create(**validated_data)
+        pl = Playlist.objects.create(id = validated_data.id, name = validated_data.name, created_at = validated_data.created_at)
+        pl.songs.set(validated_data.songs)
+        return pl
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)

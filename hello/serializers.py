@@ -37,7 +37,7 @@ class PlaylistSerializer(serializers.Serializer):
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
         instance.created_at = validated_data.get('created_at', instance.created_at)
-        instance.songs = validated_data.get('songs', instance.songs)
+        instance.songs.set(validated_data.get('songs', instance.songs))
 
         instance.save()
         return instance

@@ -60,7 +60,7 @@ class SongsField(serializers.Field):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     # songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    songs = SongsField(many=True)
+    songs = SongsField()
 
     def to_native(self, instance):
         print('heyyyyya')

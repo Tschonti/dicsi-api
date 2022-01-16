@@ -59,14 +59,9 @@ class SongsField(serializers.Field):
         return value.pk
 
 class PlaylistSerializer(serializers.ModelSerializer):
-    # songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    songs = SongsField()
+    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
+    #songs = SongsField()
 
-    def to_native(self, instance):
-        print('heyyyyya')
-        ret = super().to_native(instance)
-        ret['songs'] = json.loads(ret['songs'])
-        return ret
     class Meta:
         model = Playlist
         fields = ['id', 'name', 'songs', 'created_at']

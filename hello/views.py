@@ -72,5 +72,6 @@ def playlistSingular(request, id):
                 return HttpResponseBadRequest()
         if request.method == 'DELETE':
             playlist.delete()
+            return Response(status=200)
     except Playlist.DoesNotExist:
         return HttpResponseNotFound() 

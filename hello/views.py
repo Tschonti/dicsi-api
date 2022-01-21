@@ -16,9 +16,9 @@ class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all().order_by('id')
     serializer_class = SongSerializer
 
-class PlaylistViewSet(viewsets.ModelViewSet):
+""" class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all().order_by('-created_at')
-    serializer_class = PlaylistSerializer
+    serializer_class = PlaylistSerializer """
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
@@ -31,3 +31,12 @@ def searchTitle(request, term):
 def searchLyrics(request, term):
     songs = Song.objects.filter(lyrics__search=term)
     return Response(SongSerializer(songs, many=True).data)
+
+@api_view(['GET', 'POST'])
+@renderer_classes([JSONRenderer])
+def playlistIndex(request):
+    if request.method == 'GET':
+        playlists = Playlist.objects.all()
+        return Response(PlaylistSerializer(playlists, many=True).data)
+    if request.method == 'POST':
+        return

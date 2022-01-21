@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 import requests
+import json
 from rest_framework.response import Response
 from django.contrib.postgres.search import SearchQuery
 
@@ -43,7 +44,7 @@ def playlistIndex(request):
             newPlaylist = Playlist(name=request.POST.get("name"))
             newPlaylist.save()
             if request.POST.get("songs"):
-                for songId in request.POST.get("songs"):
+                for songId in json.loads(request.POST.get("songs")):
                     song = Song.objects.get(pk=songId)
                     newPlaylist.songs.add(song)
 

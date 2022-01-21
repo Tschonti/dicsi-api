@@ -48,9 +48,6 @@ def playlistIndex(request):
                     songList = json.loads(request.POST.get("songs"))
                     if type(songList) != list:
                         raise json.JSONDecodeError('this isn\'t a list', request.POST.get("songs"), 1)
-                    #for songId in json.loads(request.POST.get("songs")):
-                    #    song = Song.objects.get(pk=songId)
-                    #    newPlaylist.songs.add(song)
                     songsToAdd = Song.objects.filter(pk__in=songList)
                     newPlaylist.songs.add(*songsToAdd)
                 except json.JSONDecodeError:
@@ -76,9 +73,8 @@ def playlistSingular(request, id):
                         songList = json.loads(request.POST.get("songs"))
                         if type(songList) != list:
                             raise json.JSONDecodeError('this isn\'t a list', request.POST.get("songs"), 1)
-                        for songId in json.loads(request.POST.get("songs")):
-                            song = Song.objects.get(pk=songId)
-                            playlist.songs.add(song)
+                        songsToAdd = Song.objects.filter(pk__in=songList)
+                        playlist.songs.add(*songsToAdd)
                     except json.JSONDecodeError:
                         return HttpResponseBadRequest()
                 return Response(PlaylistSerializer(playlist).data)

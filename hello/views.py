@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, JsonResponse
 import requests
 import json
 from rest_framework.response import Response
@@ -44,12 +44,14 @@ def playlistIndex(request):
             newPlaylist = Playlist(name=request.POST.get("name"))
             newPlaylist.save()
             if request.POST.get("songs"):
-                songList = json.loads(request.POST.get("songs"))
-                if type(songList) == list:
+                try:
+                    songList = json.loads(request.POST.get("songs"))
+                    if type(songList) != list:
+                        raise json.JSONDecodeError
                     for songId in json.loads(request.POST.get("songs")):
                         song = Song.objects.get(pk=songId)
                         newPlaylist.songs.add(song)
-                else:
+                except json.JSONDecodeError:
                     return HttpResponseBadRequest()
             return Response(PlaylistSerializer(newPlaylist).data)
         else:
@@ -68,12 +70,14 @@ def playlistSingular(request, id):
                 playlist.save()
                 playlist.songs.clear()
                 if request.POST.get("songs"):
-                    songList = json.loads(request.POST.get("songs"))
-                    if type(songList) == list:
+                    try:
+                        songList = json.loads(request.POST.get("songs"))
+                        if type(songList) != list:
+                            raise json.JSONDecodeError
                         for songId in json.loads(request.POST.get("songs")):
                             song = Song.objects.get(pk=songId)
                             playlist.songs.add(song)
-                    else:
+                    except json.JSONDecodeError:
                         return HttpResponseBadRequest()
                 return Response(PlaylistSerializer(playlist).data)
             else:

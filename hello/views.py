@@ -52,7 +52,7 @@ def playlistIndex(request):
                     #    song = Song.objects.get(pk=songId)
                     #    newPlaylist.songs.add(song)
                     songsToAdd = Song.objects.filter(pk__in=songList)
-                    newPlaylist.songs.add(songsToAdd)
+                    newPlaylist.songs.add(*songsToAdd)
                 except json.JSONDecodeError:
                     return HttpResponseBadRequest()
             return Response(PlaylistSerializer(newPlaylist).data)

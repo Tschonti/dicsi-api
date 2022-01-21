@@ -51,11 +51,25 @@ def playlistIndex(request):
         else:
             return HttpResponseBadRequest()
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @renderer_classes([JSONRenderer])
 def playlistSingular(request, id):
-    if request.method == 'GET':
+    try:
         playlist = Playlist.objects.get(pk=id)
-        return Response(PlaylistSerializer(playlist).data)
-    if request.method == 'POST':
-        return
+        if request.method == 'GET':
+            return Response(PlaylistSerializer(playlist).data)
+        if request.method == 'PUT':
+            if request.PUT.get("name"):
+                playlist.name = request.PUT.get("name")
+                playlist.save()
+                playlist.songs.clear()
+                if request.PUT.get("songs"):
+                    for songId in json.loads(request.PUT.get("songs")):
+                        song = Song.objects.get(pk=songId)
+                        playlist.songs.add(song)
+            else:
+                return HttpResponseBadRequest()
+        if request.method == 'DELETE':
+            playlist.delete()
+    except Playlist.DoesNotExist:
+        return HttpResponseNotFound() 

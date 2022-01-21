@@ -14,5 +14,5 @@ urlpatterns = [
     path('search-title/<term>/', views.searchTitle),
     path('search-lyrics/<term>/', views.searchLyrics),
     path('playlists/', views.playlistIndex),
-    #path('playlists/<id>', views.playlistSingle)
+    path('playlists/<id>', views.playlistSingle)
 ]

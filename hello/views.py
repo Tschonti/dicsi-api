@@ -40,3 +40,12 @@ def playlistIndex(request):
         return Response(PlaylistSerializer(playlists, many=True).data)
     if request.method == 'POST':
         return
+
+@api_view(['GET', 'POST'])
+@renderer_classes([JSONRenderer])
+def playlistIndex(request, id):
+    if request.method == 'GET':
+        playlist = Playlist.objects.get(pk=id)
+        return Response(PlaylistSerializer(playlist).data)
+    if request.method == 'POST':
+        return

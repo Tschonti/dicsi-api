@@ -67,6 +67,7 @@ def playlistSingular(request, id):
                     for songId in json.loads(request.PUT.get("songs")):
                         song = Song.objects.get(pk=songId)
                         playlist.songs.add(song)
+                return Response(PlaylistSerializer(playlist).data)
             else:
                 return HttpResponseBadRequest()
         if request.method == 'DELETE':

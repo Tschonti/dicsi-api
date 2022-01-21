@@ -44,9 +44,13 @@ def playlistIndex(request):
             newPlaylist = Playlist(name=request.POST.get("name"))
             newPlaylist.save()
             if request.POST.get("songs"):
-                for songId in json.loads(request.POST.get("songs")):
-                    song = Song.objects.get(pk=songId)
-                    newPlaylist.songs.add(song)
+                songList = json.loads(request.POST.get("songs"))
+                if type(songList) == list:
+                    for songId in json.loads(request.POST.get("songs")):
+                        song = Song.objects.get(pk=songId)
+                        newPlaylist.songs.add(song)
+                else:
+                    return HttpResponseBadRequest()
             return Response(PlaylistSerializer(newPlaylist).data)
         else:
             return HttpResponseBadRequest()
@@ -64,9 +68,13 @@ def playlistSingular(request, id):
                 playlist.save()
                 playlist.songs.clear()
                 if request.POST.get("songs"):
-                    for songId in json.loads(request.POST.get("songs")):
-                        song = Song.objects.get(pk=songId)
-                        playlist.songs.add(song)
+                    songList = json.loads(request.POST.get("songs"))
+                    if type(songList) == list:
+                        for songId in json.loads(request.POST.get("songs")):
+                            song = Song.objects.get(pk=songId)
+                            playlist.songs.add(song)
+                    else:
+                        return HttpResponseBadRequest()
                 return Response(PlaylistSerializer(playlist).data)
             else:
                 return HttpResponseBadRequest()

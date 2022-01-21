@@ -59,12 +59,12 @@ def playlistSingular(request, id):
         if request.method == 'GET':
             return Response(PlaylistSerializer(playlist).data)
         if request.method == 'PUT':
-            if request.PUT.get("name"):
-                playlist.name = request.PUT.get("name")
+            if request.POST.get("name"):
+                playlist.name = request.POST.get("name")
                 playlist.save()
                 playlist.songs.clear()
-                if request.PUT.get("songs"):
-                    for songId in json.loads(request.PUT.get("songs")):
+                if request.POST.get("songs"):
+                    for songId in json.loads(request.POST.get("songs")):
                         song = Song.objects.get(pk=songId)
                         playlist.songs.add(song)
                 return Response(PlaylistSerializer(playlist).data)

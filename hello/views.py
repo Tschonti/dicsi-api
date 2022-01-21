@@ -44,7 +44,7 @@ def playlistIndex(request):
             newPlaylist.save()
             if request.POST.get("songs"):
                 for songId in request.POST.get("songs"):
-                    song = Song.get(pk=songId)
+                    song = Song.objects.get(pk=songId)
                     newPlaylist.songs.add(song)
 
 @api_view(['GET', 'POST'])

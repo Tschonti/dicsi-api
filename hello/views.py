@@ -40,7 +40,7 @@ def playlistIndex(request):
         return Response(PlaylistSerializer(playlists, many=True).data)
     if request.method == 'POST':
         if request.POST.get("name"):
-            newPlaylist = Playlist(name=request.body.name)
+            newPlaylist = Playlist(name=request.POST.get("name"))
             newPlaylist.save()
             if request.POST.get("songs"):
                 for songId in request.POST.get("songs"):

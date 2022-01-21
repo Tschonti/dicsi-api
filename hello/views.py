@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 import requests
 import json
 from rest_framework.response import Response
@@ -47,6 +47,9 @@ def playlistIndex(request):
                 for songId in json.loads(request.POST.get("songs")):
                     song = Song.objects.get(pk=songId)
                     newPlaylist.songs.add(song)
+            return Response(PlaylistSerializer(newPlaylist).data)
+        else:
+            return HttpResponseBadRequest
 
 @api_view(['GET', 'POST'])
 @renderer_classes([JSONRenderer])

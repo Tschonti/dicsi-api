@@ -49,8 +49,7 @@ def playlistIndex(request):
                     newPlaylist.songs.add(song)
             return Response(PlaylistSerializer(newPlaylist).data)
         else:
-            print("skdgfsdi")
-            return HttpResponseBadRequest
+            return HttpResponseBadRequest()
 
 @api_view(['GET', 'POST'])
 @renderer_classes([JSONRenderer])

@@ -43,7 +43,7 @@ def playlistIndex(request):
 
 @api_view(['GET', 'POST'])
 @renderer_classes([JSONRenderer])
-def playlistIndex(request, id):
+def playlistSingular(request, id):
     if request.method == 'GET':
         playlist = Playlist.objects.get(pk=id)
         return Response(PlaylistSerializer(playlist).data)

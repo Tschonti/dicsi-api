@@ -40,20 +40,20 @@ def playlistIndex(request):
         playlists = Playlist.objects.all()
         return Response(PlaylistSerializer(playlists, many=True).data)
     if request.method == 'POST':
-        if request.POST.get("name"):
-            newPlaylist = Playlist(name=request.POST.get("name"))
-            newPlaylist.save()
-            if request.POST.get("songs"):
-                try:
-                    songList = json.loads(request.POST.get("songs"))
-                    if type(songList) != list:
-                        raise json.JSONDecodeError('this isn\'t a list', request.POST.get("songs"), 1)
-                    songsToAdd = Song.objects.filter(pk__in=songList)
+        try:
+            req = json.loads(request.body)
+            if req["name"]:
+                newPlaylist = Playlist(name=req["name"])
+                newPlaylist.save()
+                if req["songs"]:
+                    if type(req["songs"]) != list:
+                        raise json.JSONDecodeError('this isn\'t a list', req["songs"], 1)
+                    songsToAdd = Song.objects.filter(pk__in=req["songs"])
                     newPlaylist.songs.add(*songsToAdd)
-                except json.JSONDecodeError:
-                    return HttpResponseBadRequest()
-            return Response(PlaylistSerializer(newPlaylist).data)
-        else:
+                return Response(PlaylistSerializer(newPlaylist).data)
+            else:
+                raise json.JSONDecodeError('name field is required', req["name"], 1)
+        except json.JSONDecodeError:
             return HttpResponseBadRequest()
 
 @api_view(['GET', 'PUT', 'DELETE'])

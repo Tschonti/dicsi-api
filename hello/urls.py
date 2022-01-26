@@ -4,7 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'songs', views.SongViewSet)
-#router.register(r'playlists', views.PlaylistViewSet)
+router.register(r'playlists', views.PlaylistViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -13,6 +13,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('search-title/<term>/', views.searchTitle),
     path('search-lyrics/<term>/', views.searchLyrics),
-    path('playlists/', views.playlistIndex),
-    path('playlists/<id>', views.playlistSingular)
+    #path('playlists/', views.playlistIndex),
+    #path('playlists/<id>', views.playlistSingular)
 ]

@@ -13,6 +13,4 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('search-title/<term>/', views.searchTitle),
     path('search-lyrics/<term>/', views.searchLyrics),
-    #path('playlists/', views.playlistIndex),
-    #path('playlists/<id>', views.playlistSingular)
 ]

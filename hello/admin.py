@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Song, Playlist, SongInPlaylist
+from .models import Song
 
-class SongInPlaylistInline(admin.TabularInline):
-    model = SongInPlaylist
-    extra = 1
+#class SongInPlaylistInline(admin.TabularInline):
+#    model = SongInPlaylist
+#    extra = 1
+#
+#class SongAdmin(admin.ModelAdmin):
+#    inlines = (SongInPlaylistInline,)
+#
+#class PlaylistAdmin(admin.ModelAdmin):
+#    inlines = (SongInPlaylistInline,)
 
-class SongAdmin(admin.ModelAdmin):
-    inlines = (SongInPlaylistInline,)
-
-class PlaylistAdmin(admin.ModelAdmin):
-    inlines = (SongInPlaylistInline,)
-
-admin.site.register(Song, SongAdmin)
-admin.site.register(Playlist, PlaylistAdmin)
+admin.site.register(Song)
+#admin.site.register(Playlist, PlaylistAdmin)

@@ -1,7 +1,8 @@
+from dataclasses import fields
 from rest_framework import serializers
 import json
 
-from .models import Song, Playlist
+from .models import Song, Playlist, SongInPlaylist
 
 class SongSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -26,8 +27,14 @@ class SongSerializer(serializers.Serializer):
         ret['verses'] = ret['lyrics'].split('###')
         return ret
 
+class SongInPlaylistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SongInPlaylist
+        fields = '__all__'
+
 class PlaylistSerializer(serializers.ModelSerializer):
-    songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
+    #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
+    songs = SongInPlaylistSerializer(many=True, read_only=True)
 
     class Meta:
         model = Playlist

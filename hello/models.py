@@ -10,4 +10,9 @@ class Song(models.Model):
 class Playlist(models.Model):
     name = models.CharField(max_length=256)
     created_at = models.DateTimeField(auto_now_add=True)
-    songs = models.ManyToManyField(Song)
+    songs = models.ManyToManyField(Song, through="SongInPlaylist")
+
+class SongInPlaylist(models.Model):
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+    place = models.IntegerField()

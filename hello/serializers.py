@@ -51,6 +51,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
-        print(instance.songs)
+        for song in instance.songs:
+            print(song)
         instance.save()
         return instance

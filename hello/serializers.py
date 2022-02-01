@@ -10,7 +10,7 @@ class SongInPlaylistSerializer(serializers.ModelSerializer):
     #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
         model = SongInPlaylist
-        fields = ['order']
+        fields = ['place']
 
 class SongSerializer(serializers.Serializer):
     id = serializers.IntegerField()

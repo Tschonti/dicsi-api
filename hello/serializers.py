@@ -38,7 +38,7 @@ class SongInPlaylistSerializer(serializers.ModelSerializer):
 #        return ret
 
 class SongSerializer(serializers.ModelSerializer):
-    place = SongInPlaylistSerializer()
+    order = SongInPlaylistSerializer()
     verses = serializers.ListField(
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )
@@ -49,7 +49,7 @@ class SongSerializer(serializers.ModelSerializer):
     #    return ret
     class Meta:
         model = Song
-        fields = ['id', 'title', 'verses', 'place']
+        fields = ['id', 'title', 'verses', 'order']
 
 class PlaylistSerializer(serializers.ModelSerializer):
     #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)

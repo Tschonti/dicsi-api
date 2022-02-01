@@ -57,4 +57,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
             for songInPlaylist_data in songs_data:
                 songInPlaylistInstance, created = SongInPlaylist.objects.update_or_create(defaults=songInPlaylist_data, playlist=instance, song=songInPlaylist_data['song'])
                 songInPlaylistIds.append(songInPlaylistInstance.id)
+            for songInPlaylistToBeDeleted in instance.songs.all():
+                if songInPlaylistToBeDeleted.id not in songInPlaylistIds:
+                    songInPlaylistToBeDeleted.delete()
         return instance

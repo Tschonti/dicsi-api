@@ -10,7 +10,7 @@ class SongInPlaylistSerializer(serializers.ModelSerializer):
     #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
         model = SongInPlaylist
-        fields = ['id', 'order.place']
+        fields = '__all__'
 
 class SongSerializer(serializers.Serializer):
    id = serializers.IntegerField()
@@ -37,7 +37,7 @@ class SongSerializer(serializers.Serializer):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    songs = SongInPlaylistSerializer(many=True, read_only=True)
+    songs = SongInPlaylistSerializer(source='songinplaylist_set',many=True, read_only=True)
 
     class Meta:
         model = Playlist

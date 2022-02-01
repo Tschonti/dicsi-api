@@ -42,6 +42,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'songs', 'created_at']
 
     def create(self, validated_data):
+        print(validated_data)
         songs_data = validated_data.pop('songs')
         playlist = Playlist.objects.create(**validated_data)
         for songInPlaylist_data in songs_data:

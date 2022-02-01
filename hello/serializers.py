@@ -35,17 +35,15 @@ class SongSerializer(serializers.Serializer):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    songs = SongInPlaylistSerializer(source='songinplaylist_set',many=True)
+    songs = SongInPlaylistSerializer(source='songinplaylist_set', many=True, allow_empty=True, required=False)
 
     class Meta:
         model = Playlist
         fields = ['id', 'name', 'songs', 'created_at']
 
     def create(self, validated_data):
-        print(validated_data)
-        songs_data = validated_data.pop('songinplaylist_set')
         playlist = Playlist.objects.create(**validated_data)
+        songs_data = validated_data.pop('songinplaylist_set')
         for songInPlaylist_data in songs_data:
-            #song = Song.objects.get(pk=songInPlaylist_data.song)
             SongInPlaylist.objects.create(playlist=playlist, **songInPlaylist_data)
         return playlist

@@ -7,7 +7,7 @@ from django.contrib.postgres.search import SearchQuery
 
 from rest_framework import viewsets
 
-from .serializers import SongSerializer, PlaylistSerializer, SongInPlaylistSerializer
+from .serializers import SongSerializer, PlaylistSerializer
 from .models import Song, Playlist
 
 from rest_framework.decorators import api_view, renderer_classes
@@ -19,7 +19,7 @@ class SongViewSet(viewsets.ModelViewSet):
 
 class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all().order_by('-created_at')
-    serializer_class = SongInPlaylistSerializer(many=True, read_only=True)
+    serializer_class = PlaylistSerializer
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])

@@ -6,11 +6,11 @@ from .models import Song, Playlist, SongInPlaylist
 
 
 class SongInPlaylistSerializer(serializers.ModelSerializer):
-    song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
+    #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
     #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
         model = SongInPlaylist
-        fields = ['song', 'place']
+        fields = ['id', 'place']
 
 class SongSerializer(serializers.Serializer):
    id = serializers.IntegerField()

@@ -4,10 +4,19 @@ import json
 
 from .models import Song, Playlist, SongInPlaylist
 
+
+class SongInPlaylistSerializer(serializers.ModelSerializer):
+    #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
+    #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
+    class Meta:
+        model = SongInPlaylist
+        fields = ['order']
+
 class SongSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     title = serializers.CharField(max_length=256)
     lyrics = serializers.CharField(max_length=5000)
+    order = SongInPlaylistSerializer()
     verses = serializers.ListField(
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )
@@ -26,13 +35,6 @@ class SongSerializer(serializers.Serializer):
         ret =  super().to_representation(instance)
         ret['verses'] = ret['lyrics'].split('###')
         return ret
-
-class SongInPlaylistSerializer(serializers.ModelSerializer):
-    #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
-    #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
-    class Meta:
-        model = Song
-        fields = '__all__'
 
 class PlaylistSerializer(serializers.ModelSerializer):
     #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)

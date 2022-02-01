@@ -31,7 +31,7 @@ class SongInPlaylistSerializer(serializers.ModelSerializer):
     #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
     #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
-        model = SongInPlaylist
+        model = Song
         fields = '__all__'
 
 class PlaylistSerializer(serializers.ModelSerializer):

@@ -16,7 +16,7 @@ class Playlist(models.Model):
     songs = models.ManyToManyField(Song, through="SongInPlaylist")
 
     def __str__(self):
-        return '%s (%d songs)' % (self.name, len(self.songs.all()))
+        return '%s (%d song(s))' % (self.name, len(self.songs.all()))
 
 class SongInPlaylist(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='order')

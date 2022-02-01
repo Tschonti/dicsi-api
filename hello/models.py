@@ -15,6 +15,9 @@ class Playlist(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     songs = models.ManyToManyField(Song, through="SongInPlaylist")
 
+    def __str__(self):
+        return '%s (%d songs)' % (self.name, len(self.songs.all()))
+
 class SongInPlaylist(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='order')
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)

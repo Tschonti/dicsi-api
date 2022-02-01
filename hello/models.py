@@ -13,6 +13,6 @@ class Playlist(models.Model):
     songs = models.ManyToManyField(Song, through="SongInPlaylist")
 
 class SongInPlaylist(models.Model):
-    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='order')
+    song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='place')
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
     place = models.IntegerField()

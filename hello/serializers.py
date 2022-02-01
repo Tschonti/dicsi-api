@@ -28,8 +28,8 @@ class SongSerializer(serializers.Serializer):
         return ret
 
 class SongInPlaylistSerializer(serializers.ModelSerializer):
-    song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
-    playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
+    #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
+    #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
         model = SongInPlaylist
         fields = ['song', 'playlist', 'place']

@@ -42,10 +42,10 @@ class SongSerializer(serializers.ModelSerializer):
         child=serializers.CharField(max_length=5000), allow_empty=True, required=False
     )
 
-    def to_representation(self, instance):
-        ret =  super().to_representation(instance)
-        ret['verses'] = ret['lyrics'].split('###')
-        return ret
+    #def to_representation(self, instance):
+    #    ret =  super().to_representation(instance)
+    #    ret['verses'] = ret['lyrics'].split('###')
+    #    return ret
     class Meta:
         model = Song
         fields = ['id', 'title', 'verses', 'place']

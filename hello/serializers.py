@@ -6,8 +6,6 @@ from .models import Song, Playlist, SongInPlaylist
 
 
 class SongInPlaylistSerializer(serializers.ModelSerializer):
-    #song = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all())
-    #playlist = serializers.PrimaryKeyRelatedField(queryset=Playlist.objects.all())
     class Meta:
         model = SongInPlaylist
         fields = ['song', 'place']
@@ -37,8 +35,16 @@ class SongSerializer(serializers.Serializer):
 
 class PlaylistSerializer(serializers.ModelSerializer):
     #songs = serializers.PrimaryKeyRelatedField(queryset=Song.objects.all(), many=True, allow_empty=True, required=False)
-    songs = SongInPlaylistSerializer(source='songinplaylist_set',many=True, read_only=True)
+    songs = SongInPlaylistSerializer(source='songinplaylist_set',many=True)
 
     class Meta:
         model = Playlist
         fields = ['id', 'name', 'songs', 'created_at']
+
+    def create(self, validated_data):
+        songs_data = validated_data.pop('songs')
+        playlist = Playlist.objects.create(**validated_data)
+        for songInPlaylist_data in songs_data:
+            #song = Song.objects.get(pk=songInPlaylist_data.song)
+            SongInPlaylist.objects.create(playlist=playlist, **songInPlaylist_data)
+        return playlist

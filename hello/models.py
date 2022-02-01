@@ -7,6 +7,9 @@ class Song(models.Model):
     lyrics = models.CharField(max_length=5000)
     verses = models.CharField(max_length=5000, blank=True, default='')
 
+    def __str__(self) :
+        return '%d. %s' % (self.id, self.title)
+
 class Playlist(models.Model):
     name = models.CharField(max_length=256)
     created_at = models.DateTimeField(auto_now_add=True)

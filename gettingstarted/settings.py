@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import django_heroku
 import dj_database_url
 
 
@@ -63,7 +62,8 @@ CORS_ALLOWED_ORIGINS = [
     #"http://localhost:3000",
     #"http://192.168.0.3:3000",
     #"http://localhost:5001",
-    "https://okgy.hu"
+    "https://okgy.hu",
+    "https://dicsi.okgy.hu"
 ]
 
 ROOT_URLCONF = "gettingstarted.urls"
@@ -131,8 +131,6 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
-
-django_heroku.settings(locals())
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

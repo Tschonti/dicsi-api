@@ -27,7 +27,7 @@ SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be us
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["http://api.dicsi.okgy.hu/"]
+ALLOWED_HOSTS = ["api.dicsi.okgy.hu"]
 
 
 # Application definition

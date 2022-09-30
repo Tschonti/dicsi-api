@@ -1,4 +1,4 @@
 import os
 import sys
-from dicsi-api import application
+from gettingstarted.wsgi import application
 sys.path.insert(0, os.path.dirname(__file__))

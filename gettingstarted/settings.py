@@ -65,7 +65,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://okgy.hu",
     "https://dicsi.okgy.hu",
     "https://zenesz.okgy.hu"
-] if os.environ['ALLOW_LOCAL'] else [
+] if os.getenv("ALLOW_LOCAL", 'False').lower() in ('true', '1', 't') else [
     "https://okgy.hu",
     "https://dicsi.okgy.hu",
     "https://zenesz.okgy.hu"

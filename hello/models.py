@@ -24,7 +24,7 @@ class SongInPlaylist(models.Model):
     place = models.IntegerField()
 
 class Search(models.Lookup):
-    lookup_name = 'mysearch'
+    lookup_name = 'search'
 
     def as_mysql(self, compiler, connection):
         lhs, lhs_params = self.process_lhs(compiler, connection)

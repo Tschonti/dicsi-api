@@ -4,4 +4,6 @@ Basic RESTful API that servers as the backend server for [ÖKGY dicsi](https://g
 
 Created from [heroku/python-getting-started](https://github.com/heroku/python-getting-started)
 
+No longer hosted on Heroku.
+
 Barebones Django app with Django REST Framework

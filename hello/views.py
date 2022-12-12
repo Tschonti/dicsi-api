@@ -13,6 +13,8 @@ from .models import Song, Playlist
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
+import urllib
+
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all().order_by('id')
     serializer_class = SongSerializer
@@ -25,7 +27,9 @@ class PlaylistViewSet(viewsets.ModelViewSet):
 @renderer_classes([JSONRenderer])
 def searchTitle(request, term):
     print("SEARCH: " + term)
-    songs = Song.objects.filter(title__search=term)
+    decoded_term = urllib.parse.unquote(term)
+    print("DECODED SEARCH: " + decoded_term)
+    songs = Song.objects.filter(title__search=decoded_term)
     return Response(SongSerializer(songs, many=True).data)
 
 @api_view(['GET'])

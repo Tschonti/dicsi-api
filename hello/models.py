@@ -28,9 +28,7 @@ class Search(models.Lookup):
 
     def as_mysql(self, compiler, connection):
         lhs, lhs_params = self.process_lhs(compiler, connection)
-        print("LHS: " + lhs)
         rhs, rhs_params = self.process_rhs(compiler, connection)
-        print("RHS: " + rhs)
         params = lhs_params + rhs_params
         return 'MATCH (%s) AGAINST (%s)' % (lhs, rhs), params
 

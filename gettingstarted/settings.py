@@ -105,6 +105,8 @@ DATABASES = {
         'PORT': os.environ['DB_PORT'],
         'OPTIONS': {
           'autocommit': True,
+          'charset': 'utf8',
+          'use_unicode': True
         },
     }
 }

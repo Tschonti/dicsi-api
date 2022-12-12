@@ -26,14 +26,13 @@ class PlaylistViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchTitle(request, term):
-    print("SEARCH: " + term)
     decoded_term = urllib.parse.unquote(term)
-    print("DECODED SEARCH: " + decoded_term)
     songs = Song.objects.filter(title__search=decoded_term)
     return Response(SongSerializer(songs, many=True).data)
 
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def searchLyrics(request, term):
-    songs = Song.objects.filter(lyrics__search=term)
+    decoded_term = urllib.parse.unquote(term)
+    songs = Song.objects.filter(lyrics__search=decoded_term)
     return Response(SongSerializer(songs, many=True).data)
